@@ -1,7 +1,8 @@
-import app = require('./app');
+import { app, verifyJWT } from './app';
+
 import { websocket } from './app-ws';
 
-const server = app.default.listen(process.env.PORT || 3000, () => {
+const server = app.listen(process.env.PORT || 3000, () => {
     console.log(`App Express is running!`);
 })
 

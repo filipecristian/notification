@@ -1,3 +1,5 @@
+import jwt = require('jsonwebtoken');
+
 const WebSocket = require('ws');
  
 function onError(ws: any, err: any) {
@@ -9,10 +11,27 @@ function onMessage(ws: any, data: any) {
     ws.send(`recebido!`);
 }
  
-function onConnection(ws: any, req: any) {
-    ws.on('message', (data: any) => onMessage(ws, data));
-    ws.on('error', (error: any) => onError(ws, error));
-    console.log(`onConnection`);
+function onConnection(ws: any, req: any, res: any) {
+
+    const token = req.headers['authorization'];
+
+    if (process.env.SECRET === undefined || !token) {
+        ws.send('closing because secret or token is invalid');
+        ws.close();    
+        return;
+    }
+
+    jwt.verify(token, process.env.SECRET, function(err: any, decoded: any) {
+        if (err) {
+            ws.send('closing because token is invalid');
+            ws.close();
+            return;
+        }
+        req.userId = decoded.id;
+        ws.on('message', (data: any) => onMessage(ws, data));
+        ws.on('error', (error: any) => onError(ws, error));
+        console.log(`onConnection`);
+    });
 }
  
 export function websocket(server: any) : any {
