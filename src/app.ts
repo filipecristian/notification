@@ -7,26 +7,10 @@ import jwt = require('jsonwebtoken');
 export const app = express();
  
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
- 
 app.use(helmet.default());
- 
 app.use(express.json());
- 
 app.use(morgan('dev'));
  
-app.post('/login', (req, res, next) => {
-    if (req.body.user === 'filipe' && req.body.password === '123') {
-        const id = 1;
-        if (process.env.SECRET === undefined) {
-            return res.status(500).json({message: 'Chave não configurada!'});
-        }
-        const secret = process.env.SECRET;
-        const token = jwt.sign({id}, secret, {expiresIn: 300});
-        return res.json({auth: true, token: token});
-    }
-    return res.status(500).json({message: 'Usuário e senha inválidos!'});
-});
-
 app.get('/clientes', verifyJWT, (req, res, next) => { 
     console.log("Retornou todos clientes!");
     res.json([{id:1,nome:'luiz'}]);

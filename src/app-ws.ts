@@ -1,4 +1,5 @@
 import jwt = require('jsonwebtoken');
+import { JWTService } from './services/jwt.service';
 
 const WebSocket = require('ws');
  
@@ -30,7 +31,7 @@ function onConnection(ws: any, req: any, res: any) {
         req.userId = decoded.id;
         ws.on('message', (data: any) => onMessage(ws, data));
         ws.on('error', (error: any) => onError(ws, error));
-        console.log(`onConnection`);
+        console.log(`onConnection`, (new JWTService).getUser(token));
     });
 }
  
