@@ -3,6 +3,7 @@ import cors = require('cors');
 import helmet = require('helmet');
 import morgan = require('morgan');
 import jwt = require('jsonwebtoken');
+import { router } from './routes/login.route';
  
 export const app = express();
  
@@ -10,6 +11,8 @@ app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(helmet.default());
 app.use(express.json());
 app.use(morgan('dev'));
+
+app.use('/login', router)
  
 app.get('/clientes', verifyJWT, (req, res, next) => { 
     console.log("Retornou todos clientes!");

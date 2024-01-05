@@ -7,7 +7,6 @@ export class JWTService {
         let secret = process.env.SECRET ?? '';
         let tokenDecoded: any = jwt.verify(token, secret);
         
-        console.log('decoded', tokenDecoded.infoUser.id);
         return {
             id: tokenDecoded.infoUser.id,
             company: tokenDecoded.infoUser.company
