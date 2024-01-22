@@ -1,13 +1,12 @@
 import { Request } from 'express'
 
-export interface LoginRequest {
-    email: string,
-    company: number,
-    password: string,
+export interface AuthenticationRequest {
+    email: string;
+    company: string;
+    password: string;
 }
 
-export function dtoLoginRequest(req: Request) : LoginRequest | false {
-    console.log(req.body.email);
+export function dtoAuthenticationRequest(req: Request) : AuthenticationRequest|false {
     if (!req.body.email || !req.body.company || !req.body.password) {
         return false;
     }

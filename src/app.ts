@@ -1,9 +1,9 @@
 import express, { Express } from 'express'; 
 import cors = require('cors');
 import morgan = require('morgan');
-import { router } from './routes/api.route';
+import { router } from './libraries/authentication/authentication.routes';
 import { Sequelize } from 'sequelize-typescript';
-import { User } from './models/user.model';
+import { User } from './modules/users/user.model';
 
 // Express
 export const app: Express = express();
@@ -19,4 +19,4 @@ new Sequelize(connection);
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(express.json());
 app.use(morgan('dev'));
-app.use('/api', router);
+app.use('/api/authentication', router);
