@@ -2,8 +2,8 @@ import assert from 'assert';
 import { dtoAuthenticationRequest } from '../../../src/libraries/authentication/authentication.request';
 import httpMocks from 'node-mocks-http';
 
-describe('authentication request', () => {
-    it('testShouldReturnFalseIfMissingData', () => {
+describe('authentication.request', () => {
+    it('dtoAuthenticationRequest', () => {
         const mockRequest = httpMocks.createRequest({
             body: {
                 email: null,
